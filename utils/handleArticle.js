@@ -67,7 +67,10 @@ const createArticle = (res, cdbid, meta) => {
       res.message = `Created article`;
       res.status(200).send(res.message);
     })
-    .catch(error => res.status(200).send(`Error while creating article ${error}`));
+    .catch( error => {
+      res.message = `Error while creating article ${error}`;
+      res.status(200).send();
+    });
   };
 
 /**
