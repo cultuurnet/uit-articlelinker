@@ -1,4 +1,3 @@
 {
-  "api": "https://uit-curatoren.herokuapp.com",
-  "cacheUri": "postgres://postgres:mysecretpassword@127.0.0.1:5432/cache"
+  "api": "https://uit-curatoren.herokuapp.com"
 }

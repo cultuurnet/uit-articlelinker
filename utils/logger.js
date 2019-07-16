@@ -12,12 +12,13 @@ const logger = app => {
   });
 
   // save the logs to the log directory
-  const logFileDir = path.join(__dirname, 'log');
+  const rootdir = path.dirname(require.main.filename); // get the root directory
+  const logFileDir = path.join(rootdir, 'log'); // save logs in log folder in root directory
 
   // create a rotating file stream 
   const rotatingLogFile = rfs('requests.log', {
-  size: "10MB", // rotates the file when size exceeds 10MB
-  path: logFileDir
+    size: "10MB", // rotates the file when size exceeds 10MB
+    path: logFileDir
   });
 
   morgan.token('id',  req => req.id);

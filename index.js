@@ -1,7 +1,7 @@
 const port = process.env.PORT || 3000;
 const express = require('express');
 const app = express();
-const logger = require('./logger');
+const logger = require('./utils/logger');
 const scraper = require('./utils/scraper');
 const findPublishers = require('./utils/findPublishers');
 const handleArticle = require('./utils/handleArticle');
