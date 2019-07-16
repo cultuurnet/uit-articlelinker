@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Bruzz",
+    "urls": [
+      "bruzz.be"
+    ]
+  },
+  {
+    "name": "VRTNWS",
+    "urls": [
+      "vrt.be/vrtnws"
+    ]
+  },
+  {
+    "name": "Test",
+    "urls": [
+      ".be"
+    ]
+  }
+]
