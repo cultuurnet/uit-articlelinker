@@ -1,8 +1,20 @@
 [
   {
+    "name": "Bill",
+    "urls": [
+      "bill.be"
+    ]
+  },
+  {
     "name": "Bruzz",
     "urls": [
       "bruzz.be"
+    ]
+  },
+  {
+    "name": "GvA",
+    "urls": [
+      "gva.be"
     ]
   },
   {
