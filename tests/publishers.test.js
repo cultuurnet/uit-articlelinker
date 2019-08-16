@@ -11,7 +11,8 @@ describe('findPublishers: check if a publisher is trusted or not', () => {
     test('an article of bruzz.be should return the correct trusted publisher', () => {
         const articleUrl = "https://bruzz.be/en/uit/eat-drink/cafe-flora-road-memphis-2019-07-12";
         const publishers = findPublishers(articleUrl);
-        expect(publishers[0].name).toEqual('Bruzz');
+        const foundPublisherName = publishers[0].name.toLowerCase();
+        expect(foundPublisherName).toEqual('bruzz');
     });
     
     test('thevinylfactory.be should not be a trusted publisher', () => {
