@@ -9,9 +9,12 @@ const psl = require('psl');
 */
 
 const findPublishers = searchUrl => {
-    const searchDomain = getDomainName(searchUrl);
-    let publisher = publishers.filter( publisher => publisher.urls.includes(searchDomain) );
-    return publisher;
+    const url = getDomainName(searchUrl);
+    let trustedPublishers = publishers.filter( publisher => publisher.urls.includes(url.domain) );
+    if(trustedPublishers.length > 0 && trustedPublishers[0].exclude_subdomains){
+      trustedPublishers = (trustedPublishers[0].exclude_subdomains.includes(url.subdomain)) ? [] : trustedPublishers;
+    }
+    return trustedPublishers;
 };
 
 /**
@@ -23,8 +26,8 @@ const findPublishers = searchUrl => {
 const getDomainName = url => {
     // split the url, only keep first part of url
     url = url.split("/")[2];
-    const domainName = psl.parse(url).domain;
-    return domainName;
+    const parsedUrl = psl.parse(url);
+    return parsedUrl;
 };
   
   

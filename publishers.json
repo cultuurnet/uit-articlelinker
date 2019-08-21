@@ -9,6 +9,11 @@
     "name": "BRUZZ",
     "urls": [
       "bruzz.be"
+    ],
+    "exclude_subdomains": [
+      "admin",
+      "staging",
+      "stag"
     ]
   },
   {
