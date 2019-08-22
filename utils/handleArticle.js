@@ -9,13 +9,13 @@ const axios = require('axios');
   * @param object meta - meta data (headline, text, url) of the article
 */
 
-const handleArticle = (res, cdbid, url, meta) => {
+const handleArticle = (res, cdbid, meta) => {
     if(!meta.headline || !meta.url || !meta.text){
       res.message = `required meta tags are missing. headline: ${meta.headline}, url: ${meta.url}, text: ${meta.text}`;
       res.status(200).send(res.message);
       return;
     }
-    const newsArticleRequest = `${config.api}/news_articles?url=${url}&about=${cdbid}`;
+    const newsArticleRequest = `${config.api}/news_articles?url=${meta.url}&about=${cdbid}`;
     axios.get(newsArticleRequest)
     .then(function (response) {
         // handle success
@@ -28,7 +28,7 @@ const handleArticle = (res, cdbid, url, meta) => {
         const existingId = resData["hydra:member"][0].id;
         const needToUpdate = resData["hydra:member"][0].headline !== meta.headline || resData["hydra:member"][0].text !== meta.text;
             if(needToUpdate) {
-              updateArticle(res, existingId, url, cdbid, meta);
+              updateArticle(res, existingId, cdbid, meta);
             } else {
               res.message = `No need for update: ${existingId}`;
               res.status(200).send(res.message);
