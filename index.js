@@ -33,7 +33,7 @@ app.post('/linkArticle', (req, res) => {
           const foundPublisher = foundPublishers[0];
           meta.publisher = foundPublisher.name;
           // handle article
-          handleArticle(res, cdbid, url, meta);
+          handleArticle(res, cdbid, meta);
         } else {
           // unknown publisher
           res.message = `No trusted publisher is found for ${meta.url}`;
