@@ -41,6 +41,15 @@ describe('Scraper: get meta data from websites', () => {
         });
     });
 
+    test('scraper should return meta object with stripped url instead of url with params', () => {
+        const url = 'https://www.bruzz.be/uit/events-festivals/30-jaar-boterhammen-het-park-met-jari-demeulemeester-muziek-moet-kunnen?fbclid=IwAR0UEuKftZJHXEYOkqKgAy0bXKI7lx83iKNN4k4u1swgnaTn6XAtcEU5gog';
+        const strippedUrl = 'https://www.bruzz.be/uit/events-festivals/30-jaar-boterhammen-het-park-met-jari-demeulemeester-muziek-moet-kunnen';
+        return scraper(url).then( res => {
+            const meta = res;
+            expect(meta.url).toBe(strippedUrl);
+        });
+    });
+
 
     test('scraper should throw an error when url is not valid', () => {
         const url = 'https://www.notavalidurl.be';

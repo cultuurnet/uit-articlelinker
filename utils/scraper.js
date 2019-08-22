@@ -19,6 +19,8 @@ const scrapeUrl = url => {
         const meta = {};
         meta.headline = (ogTitle) ? ogTitle : pageTitle;
         meta.url = (canonical) ? canonical : url; 
+        urlParamIndex = meta.url.indexOf('?'); // check if the url has params
+        meta.url = (urlParamIndex > -1) ? meta.url.substr(0, urlParamIndex) : meta.url ; // remove params from url
         meta.text = (ogDescription) ? ogDescription : metaDescription; // if no og:description take meta description
         return meta;
     })
