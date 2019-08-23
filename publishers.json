@@ -3,9 +3,6 @@
     "name": "BILL",
     "urls": [
       "bill.be"
-    ],
-    "blacklisted_urls": [
-      "beta.bill.be"
     ]
   },
   {
