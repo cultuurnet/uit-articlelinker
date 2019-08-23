@@ -3,6 +3,9 @@
     "name": "BILL",
     "urls": [
       "bill.be"
+    ],
+    "blacklisted_urls": [
+      "beta.bill.be"
     ]
   },
   {
@@ -10,10 +13,11 @@
     "urls": [
       "bruzz.be"
     ],
-    "exclude_subdomains": [
-      "admin",
-      "staging",
-      "stag"
+    "blacklisted_urls": [
+      "admin.bruzz.be",
+      "staging.bruzz.be",
+      "stag.bruzz.be",
+      "bruzz.be/node"
     ]
   },
   {
