@@ -31,7 +31,7 @@ app.post('/linkArticle', (req, res) => {
         if(foundPublishers.length) {
           // trusted publisher
           const foundPublisher = foundPublishers[0];
-          meta.publisher = foundPublisher;
+          meta.publisher = foundPublisher.name;
           // handle article
           handleArticle(res, cdbid, meta);
         } else {

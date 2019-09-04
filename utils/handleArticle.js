@@ -55,12 +55,12 @@ const getCuratorenApiParams = (cdbid, meta) => {
     "inLanguage": "nl",
     "text": meta.text,
     "about": cdbid,
-    "publisher": meta.publisher.name,
+    "publisher": meta.publisher,
     "url": meta.url
   };
 
-  if (meta.publisher.logo) { 
-    params.publisherLogo = meta.publisher.logo;
+  if (meta.favicon) { 
+    params.publisherLogo = meta.favicon;
   }
 
   return params;
