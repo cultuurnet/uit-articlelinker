@@ -3,10 +3,10 @@ const axios = require('axios');
 
 /**
   * @desc makes request to news_articles api 
-  * @param object res - express res object
-  * @param string cdbid - id of event
-  * @param string url - original url of the article 
-  * @param object meta - meta data (headline, text, url) of the article
+  * @param {object} res - express res object
+  * @param {string} cdbid - id of event
+  * @param {string} url - original url of the article 
+  * @param {object} meta - meta data (headline, text, url) of the article
 */
 
 const handleArticle = (res, cdbid, meta) => {
@@ -44,9 +44,9 @@ const handleArticle = (res, cdbid, meta) => {
 
 /**
   * @desc creates an article via the api
-  * @param object res - express res object
-  * @param string cdbid - id of event
-  * @param object meta - meta data (headline, text, url) of the article
+  * @param {object} res - express res object
+  * @param {string} cdbid - id of event
+  * @param {object} meta - meta data (headline, text, url) of the article
 */
 
 const createArticle = (res, cdbid, meta) => {
@@ -59,7 +59,8 @@ const createArticle = (res, cdbid, meta) => {
          "inLanguage": "nl",
          "text": meta.text,
          "about": cdbid,
-         "publisher": meta.publisher,
+         "publisher": meta.publisher.name,
+         "publisherLogo": meta.publisher.logo,
          "url": meta.url
       }
     })
@@ -75,10 +76,10 @@ const createArticle = (res, cdbid, meta) => {
 
 /**
   * @desc updates an article via the api
-  * @param object res - express res object
-  * @param string id - existing id of the article
-  * @param string cdbid - id of event
-  * @param object meta - meta data (headline, text, url) of the article
+  * @param {object} res - express res object
+  * @param {string} id - existing id of the article
+  * @param {string} cdbid - id of event
+  * @param {object} meta - meta data (headline, text, url) of the article
 */
 
 const updateArticle = (res, id, cdbid, meta) => {
@@ -92,6 +93,7 @@ const updateArticle = (res, id, cdbid, meta) => {
          "text": meta.text,
          "about": cdbid,
          "publisher": meta.publisher,
+         "publisherLogo": meta.publisher.logo,
          "url": meta.url
       }
     })
