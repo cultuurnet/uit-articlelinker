@@ -56,7 +56,6 @@ const getCuratorenApiParams = (cdbid, meta) => {
     "text": meta.text,
     "about": cdbid,
     "publisher": meta.publisher.name,
-    "publisherLogo": meta.publisher.logo,
     "url": meta.url
   };
 
