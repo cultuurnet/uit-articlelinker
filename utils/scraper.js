@@ -3,8 +3,8 @@ const cheerio = require('cheerio');
 
 /**
   * @desc Promise - gets the meta data from a certain url
-  * @param string url - the url which needs to be scraped for meta data
-  * @return object - returns object with meta data (title, url)
+  * @param {string} url - the url which needs to be scraped for meta data
+  * @returns {promise} - returns object with meta data (title, url)
 */
 
 const scrapeUrl = url => {
