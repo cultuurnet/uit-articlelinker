@@ -43,6 +43,31 @@ const handleArticle = (res, cdbid, meta) => {
 };
 
 /**
+  * @desc get the parameters for the request
+  * @param {string} cdbid - id of event
+  * @param {object} meta - object containing the meta data of the article
+  * @returns {object}
+*/
+
+const getCuratorenApiParams = (cdbid, meta) => {
+  let params = {
+    "headline": meta.headline,
+    "inLanguage": "nl",
+    "text": meta.text,
+    "about": cdbid,
+    "publisher": meta.publisher.name,
+    "publisherLogo": meta.publisher.logo,
+    "url": meta.url
+  };
+
+  if (meta.publisher.logo) { 
+    params.publisherLogo = meta.publisher.logo;
+  }
+
+  return params;
+};
+
+/**
   * @desc creates an article via the api
   * @param {object} res - express res object
   * @param {string} cdbid - id of event
@@ -54,15 +79,7 @@ const createArticle = (res, cdbid, meta) => {
       method: 'post',
       headers: { 'content-type': 'application/json' },
       url: config.api + '/news_articles',
-      data: {
-         "headline": meta.headline,
-         "inLanguage": "nl",
-         "text": meta.text,
-         "about": cdbid,
-         "publisher": meta.publisher.name,
-         "publisherLogo": meta.publisher.logo,
-         "url": meta.url
-      }
+      data: getCuratorenApiParams(cdbid, meta)
     })
     .then( response => {
       res.message = `Created article`;
@@ -87,15 +104,7 @@ const updateArticle = (res, id, cdbid, meta) => {
       method: 'put',
       headers: { 'content-type': 'application/json' },
       url: config.api + '/news_articles/' + id,
-      data: {
-         "headline": meta.headline,
-         "inLanguage": "nl",
-         "text": meta.text,
-         "about": cdbid,
-         "publisher": meta.publisher,
-         "publisherLogo": meta.publisher.logo,
-         "url": meta.url
-      }
+      data: getCuratorenApiParams(cdbid, meta)
     })
     .then( response => {
       res.message = `Updated article ${id}`;
@@ -106,5 +115,7 @@ const updateArticle = (res, id, cdbid, meta) => {
       res.status(200).send(res.message);
     });
 };
+
+
 
 module.exports = handleArticle;

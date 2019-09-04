@@ -27,7 +27,7 @@ describe('findPublishers: check if a publisher is trusted or not', () => {
         });  
     });
 
-    test('an article posted on a homepage of a publisher is NOT considered a trusted publisher', () => {
+    test('an article posted on a homepage of a publisher is NOT a trusted publisher', () => {
         const testUrlArr = [
             "https://bruzz.be/",
             "https://bruzz.be",
