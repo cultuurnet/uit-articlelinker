@@ -1,14 +1,12 @@
 [
   {
     "name": "BILL",
-    "logo": "https://beta.bill.be/img/favicon.png",
     "urls": [
       "bill.be"
     ]
   },
   {
     "name": "BRUZZ",
-    "logo": "https://www.bruzz.be/themes/custom/bruzz/favicon.ico",
     "urls": [
       "bruzz.be"
     ],
