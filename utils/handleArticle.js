@@ -25,8 +25,9 @@ const handleArticle = (res, cdbid, meta) => {
         createArticle(res, cdbid, meta);
         } else {
         // update article
-        const existingId = resData["hydra:member"][0].id;
-        const needToUpdate = resData["hydra:member"][0].headline !== meta.headline || resData["hydra:member"][0].text !== meta.text;
+        const article = resData["hydra:member"][0];
+        const existingId = article.id;
+        const needToUpdate = isArticleChanged(article, meta);
             if(needToUpdate) {
               updateArticle(res, existingId, cdbid, meta);
             } else {
@@ -40,6 +41,17 @@ const handleArticle = (res, cdbid, meta) => {
         res.message = `can't connect to api ${error}`;
         res.status(200).send(res.message);
     });
+};
+
+/**
+  * @desc check if the article has changed
+  * @param {object} article - the article as is
+  * @param {object} meta - the scraped meta data
+  * @returns {boolean}
+*/
+
+const isArticleChanged = (article, meta) => {
+  return article.headline !== meta.headline || article.text !== meta.text || article.publisherLogo !== meta.favicon;
 };
 
 /**
@@ -62,7 +74,6 @@ const getCuratorenApiParams = (cdbid, meta) => {
   if (meta.favicon) { 
     params.publisherLogo = meta.favicon;
   }
-
   return params;
 };
 
