@@ -6,14 +6,15 @@ const scraper = require('../utils/scraper');
 
 describe('Scraper: get meta data from websites', () => {
 
-    test('scraper should return meta object with headline, text, url properties', () => {
+    test('scraper should return meta object with headline, text, url, favicon properties', () => {
         const url = 'https://thevinylfactory.com/features/the-best-albums-of-2019-so-far/';
         return scraper(url).then( res => {
             const meta = res;
             expect(meta).toMatchObject({ 
                 headline: expect.any(String),
                 text: expect.any(String),
-                url: expect.any(String)
+                url: expect.any(String),
+                favicon: expect.any(String)
             });
         });
     });
@@ -23,7 +24,8 @@ describe('Scraper: get meta data from websites', () => {
         const correctMeta = {
             headline: 'Radiohead share 18 hours of OK Computer studio sessions',
             text: ".",
-            url: 'https://thevinylfactory.com/news/radiohead-share-18-hours-ok-computer-sessions-mini-disc-hacked/'
+            url: 'https://thevinylfactory.com/news/radiohead-share-18-hours-ok-computer-sessions-mini-disc-hacked/',
+            favicon: "https://thevinylfactory.com/wp-content/uploads/2017/01/cropped-VFselects-logo-2-1-32x32.png"
         };
         return scraper(url).then( res => {
             const meta = res;

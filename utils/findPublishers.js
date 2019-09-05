@@ -3,8 +3,8 @@ const psl = require('psl');
 
 /**
   * @desc finds out if a publisher is a trusted publihser
-  * @param string searchUrl - url which needs to be verified
-  * @return array - returns array with trusted publishers
+  * @param {string} searchUrl - url which needs to be verified
+  * @returns {array} - returns array with trusted publishers
 */
 
 const findPublishers = searchUrl => {
@@ -24,8 +24,8 @@ const findPublishers = searchUrl => {
 
 /**
   * @desc get a domain name (e.g. http://www.bruzz.be/random-article will return bruzz.be)
-  * @param string url - url which needs to be parsed
-  * @return string - returns the domain name of a given url
+  * @param {string} url - url which needs to be parsed
+  * @returns {string} - returns the domain name of a given url
 */
 
 const getDomainName = url => {
@@ -37,9 +37,9 @@ const getDomainName = url => {
 
 /**
   * @desc check if a url is blacklisted by a publisher
-  * @param string scrapedUrl - url which was scraped 
-  * @param object publisher 
-  * @return bool - returns if the scrapedUrl is blacklisted
+  * @param {string} scrapedUrl - url which was scraped 
+  * @param {object} publisher 
+  * @returns {boolean} returns if the scrapedUrl is blacklisted
 */
 
 const isBlackListedUrl = (scarpedUrl, publisher) => {
@@ -51,9 +51,8 @@ const isBlackListedUrl = (scarpedUrl, publisher) => {
 
 /**
   * @desc check if url is homepage
-  * @param string url - url which needs to be checked
-  * @param publisher url - url which needs to be parsed
-  * @return bool - returns if the url is a homepage
+  * @param {string} url which needs to be checked
+  * @returns {boolean} returns if the url is a homepage
 */
 
 const isHomePage = url => {

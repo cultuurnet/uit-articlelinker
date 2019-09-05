@@ -28,11 +28,5 @@
     "urls": [
       "vrt.be/vrtnws"
     ]
-  },
-  {
-    "name": "Test",
-    "urls": [
-      ".be"
-    ]
   }
 ]

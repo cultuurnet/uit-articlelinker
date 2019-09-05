@@ -3,10 +3,10 @@ const axios = require('axios');
 
 /**
   * @desc makes request to news_articles api 
-  * @param object res - express res object
-  * @param string cdbid - id of event
-  * @param string url - original url of the article 
-  * @param object meta - meta data (headline, text, url) of the article
+  * @param {object} res - express res object
+  * @param {string} cdbid - id of event
+  * @param {string} url - original url of the article 
+  * @param {object} meta - meta data (headline, text, url) of the article
 */
 
 const handleArticle = (res, cdbid, meta) => {
@@ -25,8 +25,9 @@ const handleArticle = (res, cdbid, meta) => {
         createArticle(res, cdbid, meta);
         } else {
         // update article
-        const existingId = resData["hydra:member"][0].id;
-        const needToUpdate = resData["hydra:member"][0].headline !== meta.headline || resData["hydra:member"][0].text !== meta.text;
+        const article = resData["hydra:member"][0];
+        const existingId = article.id;
+        const needToUpdate = isArticleChanged(article, meta);
             if(needToUpdate) {
               updateArticle(res, existingId, cdbid, meta);
             } else {
@@ -43,10 +44,44 @@ const handleArticle = (res, cdbid, meta) => {
 };
 
 /**
+  * @desc check if the article has changed
+  * @param {object} article - the article as is
+  * @param {object} meta - the scraped meta data
+  * @returns {boolean}
+*/
+
+const isArticleChanged = (article, meta) => {
+  return article.headline !== meta.headline || article.text !== meta.text || article.publisherLogo !== meta.favicon;
+};
+
+/**
+  * @desc get the parameters for the request
+  * @param {string} cdbid - id of event
+  * @param {object} meta - object containing the meta data of the article
+  * @returns {object}
+*/
+
+const getCuratorenApiParams = (cdbid, meta) => {
+  let params = {
+    "headline": meta.headline,
+    "inLanguage": "nl",
+    "text": meta.text,
+    "about": cdbid,
+    "publisher": meta.publisher,
+    "url": meta.url
+  };
+
+  if (meta.favicon) { 
+    params.publisherLogo = meta.favicon;
+  }
+  return params;
+};
+
+/**
   * @desc creates an article via the api
-  * @param object res - express res object
-  * @param string cdbid - id of event
-  * @param object meta - meta data (headline, text, url) of the article
+  * @param {object} res - express res object
+  * @param {string} cdbid - id of event
+  * @param {object} meta - meta data (headline, text, url) of the article
 */
 
 const createArticle = (res, cdbid, meta) => {
@@ -54,14 +89,7 @@ const createArticle = (res, cdbid, meta) => {
       method: 'post',
       headers: { 'content-type': 'application/json' },
       url: config.api + '/news_articles',
-      data: {
-         "headline": meta.headline,
-         "inLanguage": "nl",
-         "text": meta.text,
-         "about": cdbid,
-         "publisher": meta.publisher,
-         "url": meta.url
-      }
+      data: getCuratorenApiParams(cdbid, meta)
     })
     .then( response => {
       res.message = `Created article`;
@@ -75,10 +103,10 @@ const createArticle = (res, cdbid, meta) => {
 
 /**
   * @desc updates an article via the api
-  * @param object res - express res object
-  * @param string id - existing id of the article
-  * @param string cdbid - id of event
-  * @param object meta - meta data (headline, text, url) of the article
+  * @param {object} res - express res object
+  * @param {string} id - existing id of the article
+  * @param {string} cdbid - id of event
+  * @param {object} meta - meta data (headline, text, url) of the article
 */
 
 const updateArticle = (res, id, cdbid, meta) => {
@@ -86,14 +114,7 @@ const updateArticle = (res, id, cdbid, meta) => {
       method: 'put',
       headers: { 'content-type': 'application/json' },
       url: config.api + '/news_articles/' + id,
-      data: {
-         "headline": meta.headline,
-         "inLanguage": "nl",
-         "text": meta.text,
-         "about": cdbid,
-         "publisher": meta.publisher,
-         "url": meta.url
-      }
+      data: getCuratorenApiParams(cdbid, meta)
     })
     .then( response => {
       res.message = `Updated article ${id}`;
@@ -104,5 +125,7 @@ const updateArticle = (res, id, cdbid, meta) => {
       res.status(200).send(res.message);
     });
 };
+
+
 
 module.exports = handleArticle;
