@@ -15,12 +15,12 @@ describe('Articlelinker', () => {
 
   // remove article from curatoren api after test suite
   afterAll(() => {
-    return new Promise(resolve => {
+    return new Promise(done => {
       axios.get(`${api}/news_articles?about=${testCdbid}`)
       .then(function(res){
         const id = res.data['hydra:member'][0].id;
         axios.delete(`${api}/news_articles/${id}`).then(function(){
-          resolve();
+          done();
         });
       });
     });
