@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 const uuidv1 = require('uuid/v1');
 const morgan = require('morgan');
 const path = require('path');
