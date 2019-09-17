@@ -1,3 +1,4 @@
 {
-  "api": "https://uit-curatoren.herokuapp.com"
+  "api": "https://curator-acc.uitdatabank.be",
+  "testCdbid": "a3b43810-5ca0-4565-86de-65d3b69dc764" 
 }
