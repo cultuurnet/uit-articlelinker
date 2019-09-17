@@ -46,6 +46,7 @@ app.post('/linkArticle', (req, res) => {
       });
 });
 
+module.exports = app;
 
 
 
