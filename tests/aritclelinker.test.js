@@ -26,7 +26,7 @@ describe('Articlelinker', () => {
     });
   });
 
-  test('should return error message when publisher is NOT valid', () => {
+  test('should return error message when publisher is NOT valid', done => {
     const testUrl = "https://www.google.be";
     const testCdbid = "a3b43810-5ca0-4565-86de-65d3b69dc764";
     return request(articlelinker)
@@ -37,6 +37,7 @@ describe('Articlelinker', () => {
     })
     .then(function(res){
       expect(res.text).toBe(`No trusted publisher is found for ${testUrl}`);
+      done();
     });
   });
 
