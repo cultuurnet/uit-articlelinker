@@ -34,4 +34,8 @@ Run tests via the following command:
 $ npm test
 ```
 
+## 5. Logging
+
+For logging the requests and responses we use [morgan](https://github.com/expressjs/morgan)
+
 
