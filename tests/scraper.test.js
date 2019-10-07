@@ -33,6 +33,15 @@ describe('Scraper: get meta data from websites', () => {
         });
     });
 
+    test('scraper should return the relative path of favicon', () => {
+      const url = 'https://www.gva.be/cnt/DMF20191003_04642727';
+      const favicon = 'https://markup.gva.be/extra/assets/img/favicons/coast-icon-228x228.png?v=20191006T221406';
+      return scraper(url).then( res => {
+        const meta = res;
+        expect(meta.favicon).toBe(favicon);
+      });
+    });
+
 
     test('scraper should return meta object with canonical url instead of initial url', () => {
         const url = 'https://amp.theguardian.com/technology/2019/jul/11/google-home-assistant-listen-recordings-users-privacy';
@@ -51,7 +60,6 @@ describe('Scraper: get meta data from websites', () => {
             expect(meta.url).toBe(strippedUrl);
         });
     });
-
 
     test('scraper should throw an error when url is not valid', () => {
         const url = 'https://www.notavalidurl.be';

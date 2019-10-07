@@ -15,7 +15,7 @@ const findPublishers = searchUrl => {
     let trustedPublishersArr = publishers.filter( publisher => publisher.urls.includes(url.domain) );
     const trustedPublisher = trustedPublishersArr[0];
     let blacklisted = false;
-    if(trustedPublishersArr.length > 0){
+    if(trustedPublishersArr.length > 0 && trustedPublisher.blacklisted_urls.length > 0){
       blacklisted = isBlackListedUrl(searchUrl, trustedPublisher);  // Check if url is blacklisted
       trustedPublishersArr = (blacklisted) ? [] : trustedPublishersArr; // reset the trustedPublishersArr if the url is blacklisted
     }
