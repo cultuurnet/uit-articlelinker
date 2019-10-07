@@ -35,10 +35,10 @@ describe('Scraper: get meta data from websites', () => {
 
     test('scraper should return the relative path of favicon', () => {
       const url = 'https://www.gva.be/cnt/DMF20191003_04642727';
-      const favicon = 'https://markup.gva.be/extra/assets/img/favicons/coast-icon-228x228.png?v=20191006T221406';
+      const favicon = 'https://markup.gva.be/extra/assets/img/favicons/coast-icon-228x228.png';
       return scraper(url).then( res => {
         const meta = res;
-        expect(meta.favicon).toBe(favicon);
+        expect(meta.favicon).toContain(favicon);
       });
     });
 
