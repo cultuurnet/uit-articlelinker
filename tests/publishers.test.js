@@ -8,6 +8,12 @@ describe('findPublishers: check if a publisher is trusted or not', () => {
         expect(publishers.length).toBeTruthy();
     });
 
+    test('gva should be a trusted publisher', () => {
+        const articleUrl = "https://www.gva.be/cnt/dmf20191004_04645015/cats-dogs-opent-winkel-in-de-kempen-biowinkel-onder-dierenspeciaalzaken";
+        const publishers = findPublishers(articleUrl);
+        expect(publishers.length).toBeTruthy();
+    });
+
     test('an article of bruzz.be should return the correct trusted publisher', () => {
         const articleUrl = "https://bruzz.be/en/uit/eat-drink/cafe-flora-road-memphis-2019-07-12";
         const publishers = findPublishers(articleUrl);
