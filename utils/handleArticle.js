@@ -15,7 +15,9 @@ const handleArticle = (res, cdbid, meta) => {
       res.status(200).send(res.message);
       return;
     }
-    const newsArticleRequest = `${config.api}/news_articles?url=${meta.url}&about=${cdbid}`;
+    const encodedUrl = encodeURI(meta.url);
+    const newsArticleRequest = `${config.api}/news_articles?url=${encodedUrl}&about=${cdbid}`;
+
     axios.get(newsArticleRequest)
     .then(function (response) {
         // handle success
