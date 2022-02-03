@@ -22,7 +22,7 @@ const handleArticle = (res, cdbid, meta) => {
     .then(function (response) {
         // handle success
         const resData = response.data;
-        if(resData["hydra:totalItems"] == 0) {
+        if(resData["hydra:member"].length === 0) {
         // add article
         createArticle(res, cdbid, meta);
         } else {
