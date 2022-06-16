@@ -1,0 +1,17 @@
+[Unit]
+Description=Curator Articlelinker
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+User=www-data
+Group=www-data
+PIDFile=/var/run/curator-articlelinker.pid
+EnvironmentFile=-/etc/default/curator-articlelinker
+WorkingDirectory=/var/www/curator-articlelinker
+ExecStart=/usr/bin/node index.js
+Restart=on-failure
+RestartSec=10s
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
