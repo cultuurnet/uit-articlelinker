@@ -75,7 +75,7 @@ pipeline {
             agent any
             options { skipDefaultCheckout() }
             environment {
-                APPLICATION_ENVIRONMENT = 'testing'
+                APPLICATION_ENVIRONMENT = 'acceptance'
             }
             steps {
                 publishAptlySnapshot snapshotName: "${env.REPOSITORY_NAME}-${env.PIPELINE_VERSION}", publishTarget: "${env.REPOSITORY_NAME}-${env.APPLICATION_ENVIRONMENT}", distributions: 'xenial'
