@@ -1,4 +1,5 @@
 const port = process.env.PORT || 4000;
+const host = process.env.HOST || '127.0.0.1';
 const express = require('express');
 const app = express();
 const logger = require('./utils/logger');
@@ -6,7 +7,7 @@ const scraper = require('./utils/scraper');
 const findPublishers = require('./utils/findPublishers');
 const handleArticle = require('./utils/handleArticle');
 
-app.listen(port);
+app.listen(port, host);
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -23,10 +24,10 @@ app.post('/linkArticle', (req, res) => {
 
     let url = req.body.url;
     const cdbid = req.body.cdbid;
-    
+
     scraper(url, res)
       .then( response => {
-        const meta = response; // get the metadata 
+        const meta = response; // get the metadata
         const foundPublishers = findPublishers(meta.url); // check if publisher is trusted
         if(foundPublishers.length) {
           // trusted publisher
@@ -45,9 +46,3 @@ app.post('/linkArticle', (req, res) => {
         res.status(200).send(res.message);
       });
 });
-
-
-
-
-
-
