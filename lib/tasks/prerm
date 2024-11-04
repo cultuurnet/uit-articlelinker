@@ -1,0 +1,3 @@
+#!/bin/bash
+
+service uitdatabank-articlelinker stop || exit 0
