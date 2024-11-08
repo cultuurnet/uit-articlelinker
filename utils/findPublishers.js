@@ -1,4 +1,4 @@
-const publishers = require('../publishers.json');
+const config = require('../config.json');
 const psl = require('psl');
 
 /**
@@ -12,7 +12,7 @@ const findPublishers = searchUrl => {
       return []; // an article posted on a homepage of a publisher is NOT considered a trusted publisher
     }
     const url = getDomainName(searchUrl);
-    let trustedPublishersArr = publishers.filter( publisher => publisher.urls.includes(url.domain) );
+    let trustedPublishersArr = config.publishers.filter( publisher => publisher.urls.includes(url.domain) );
     const trustedPublisher = trustedPublishersArr[0];
     let blacklisted = false;
     if(trustedPublishersArr.length > 0 && trustedPublisher.blacklisted_urls){
@@ -37,8 +37,8 @@ const getDomainName = url => {
 
 /**
   * @desc check if a url is blacklisted by a publisher
-  * @param {string} scrapedUrl - url which was scraped 
-  * @param {object} publisher 
+  * @param {string} scrapedUrl - url which was scraped
+  * @param {object} publisher
   * @returns {boolean} returns if the scrapedUrl is blacklisted
 */
 
