@@ -18,9 +18,8 @@ task :build_artifact do |task|
   system("fpm -s dir -t deb -n #{artifact_name} -v #{version} -a all -p pkg \
     -x pkg -x vendor -x lib -x Rakefile -x Gemfile -x Gemfile.lock \
     -x .bundle -x 'Jenkinsfile*' -x '.git*' -d nodejs \
-    --prefix /var/www/uitdatabank-articlelinker \
-    --config-files /var/www/uitdatabank-articlelinker/config.json \
-    --config-files /var/www/uitdatabank-articlelinker/publishers.json \
+    --prefix /var/www/uit-articlelinker \
+    --config-files /var/www/uit-articlelinker/config.json \
     --deb-systemd lib/tasks/uitdatabank-articlelinker.service \
     --before-remove lib/tasks/prerm \
     --deb-user www-data --deb-group www-data \
