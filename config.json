@@ -1,3 +1,35 @@
 {
-  "api": "https://curator-test.uitdatabank.be"
+  "api": "https://curator-test.uitdatabank.be",
+  "publishers": [
+    {
+      "name": "BILL",
+      "urls": [
+        "bill.be"
+      ]
+    },
+    {
+      "name": "BRUZZ",
+      "urls": [
+        "bruzz.be"
+      ],
+      "blacklisted_urls": [
+        "admin.bruzz.be",
+        "staging.bruzz.be",
+        "stag.bruzz.be",
+        "bruzz.be/node"
+      ]
+    },
+    {
+      "name": "Gazet van Antwerpen",
+      "urls": [
+        "gva.be"
+      ]
+    },
+    {
+      "name": "VRTNWS",
+      "urls": [
+        "vrt.be/vrtnws"
+      ]
+    }
+  ]
 }
