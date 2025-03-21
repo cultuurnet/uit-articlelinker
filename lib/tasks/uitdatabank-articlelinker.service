@@ -5,10 +5,13 @@ After=syslog.target network.target remote-fs.target nss-lookup.target
 [Service]
 User=www-data
 Group=www-data
-PIDFile=/var/run/uitdatabank-articlelinker.pid
+PermissionsStartOnly=true
+RuntimeDirectory=uitdatabank-articlelinker
+RuntimeDirectoryMode=0755
+PIDFile=/run/uitdatabank-articlelinker/uitdatabank-articlelinker.pid
 EnvironmentFile=-/etc/default/uitdatabank-articlelinker
 WorkingDirectory=/var/www/uit-articlelinker
-ExecStart=/usr/bin/node index.js
+ExecStart=/usr/bin/node --title uitdatabank-articlelinker index.js
 Restart=on-failure
 RestartSec=10s
 Type=simple
