@@ -19,21 +19,45 @@ pipeline {
         }
 
         stage('Setup and build') {
-            agent { label 'ubuntu && 20.04 && nodejs22' }
-            environment {
-                GIT_SHORT_COMMIT = util.shortCommitRef()
-                ARTIFACT_VERSION = "${env.PIPELINE_VERSION}" + '+sha.' + "${env.GIT_SHORT_COMMIT}"
-            }
-                        steps {
-                sh label: 'Install rubygems', script: 'bundle install --deployment'
-                sh label: 'Build binaries', script: 'bundle exec rake build'
-                sh label: 'Build artifact', script: "bundle exec rake build_artifact ARTIFACT_VERSION=${env.ARTIFACT_VERSION}"
-                archiveArtifacts artifacts: "pkg/*${env.ARTIFACT_VERSION}*.deb", onlyIfSuccessful: true
-            }
+            stages {
+                stage('Build project') {
+                    agent {
+                        docker {
+                            image 'base_images/node/22'
+                            label 'docker'
+                        }
+                    }
+                    environment {
+                        npm_config_cache = '/tmp/.npm-cache'
+                    }
+                    steps {
+                        sh label: 'Install node modules', script: 'npm ci --omit=dev'
+                        stash name: 'node_modules', includes: 'node_modules/**'
+                    }
+                    post {
+                        cleanup {
+                            cleanWs()
+                        }
+                    }
+                }
 
-            post {
-                cleanup {
-                    cleanWs()
+                stage('Build artifact') {
+                    agent { label 'ubuntu && 20.04' }
+                    environment {
+                        GIT_SHORT_COMMIT = util.shortCommitRef()
+                        ARTIFACT_VERSION = "${env.PIPELINE_VERSION}" + '+sha.' + "${env.GIT_SHORT_COMMIT}"
+                    }
+                    steps {
+                        sh label: 'Install rubygems', script: 'bundle install --deployment'
+                        unstash 'node_modules'
+                        sh label: 'Build artifact', script: "bundle exec rake build_artifact ARTIFACT_VERSION=${env.ARTIFACT_VERSION}"
+                        archiveArtifacts artifacts: "pkg/*${env.ARTIFACT_VERSION}*.deb", onlyIfSuccessful: true
+                    }
+                    post {
+                        cleanup {
+                            cleanWs()
+                        }
+                    }
                 }
             }
         }
