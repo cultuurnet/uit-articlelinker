@@ -32,7 +32,8 @@ pipeline {
                     }
                     steps {
                         sh label: 'Install node modules', script: 'npm ci --omit=dev'
-                        stash name: 'node_modules', includes: 'node_modules/**'
+                        sh label: 'Archive build', script: 'tar czf node_modules.tgz node_modules'
+                        stash name: 'node_modules', includes: 'node_modules.tgz'
                     }
                     post {
                         cleanup {
@@ -50,6 +51,7 @@ pipeline {
                     steps {
                         sh label: 'Install rubygems', script: 'bundle install --deployment'
                         unstash 'node_modules'
+                        sh label: 'Extract build', script: 'tar xzf node_modules.tgz && rm node_modules.tgz'
                         sh label: 'Build artifact', script: "bundle exec rake build_artifact ARTIFACT_VERSION=${env.ARTIFACT_VERSION}"
                         archiveArtifacts artifacts: "pkg/*${env.ARTIFACT_VERSION}*.deb", onlyIfSuccessful: true
                     }
