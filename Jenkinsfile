@@ -43,7 +43,7 @@ pipeline {
                 }
 
                 stage('Build artifact') {
-                    agent { label 'ubuntu && 20.04' }
+                    agent any
                     environment {
                         GIT_SHORT_COMMIT = util.shortCommitRef()
                         ARTIFACT_VERSION = "${env.PIPELINE_VERSION}" + '+sha.' + "${env.GIT_SHORT_COMMIT}"
@@ -91,7 +91,7 @@ pipeline {
         }
 
         stage('Deploy to acceptance') {
-            agent { label 'ubuntu && 20.04' }
+            agent any
             options { skipDefaultCheckout() }
             environment {
                 APPLICATION_ENVIRONMENT = 'acceptance'
@@ -109,7 +109,7 @@ pipeline {
 
         stage('Deploy to testing') {
             input { message "Deploy to Testing?" }
-            agent { label 'ubuntu && 20.04' }
+            agent any
             options { skipDefaultCheckout() }
             environment {
                 APPLICATION_ENVIRONMENT = 'testing'
@@ -127,7 +127,7 @@ pipeline {
 
         stage('Deploy to production') {
             input { message "Deploy to Production?" }
-            agent { label 'ubuntu && 20.04' }
+            agent any
             options { skipDefaultCheckout() }
             environment {
                 APPLICATION_ENVIRONMENT = 'production'
