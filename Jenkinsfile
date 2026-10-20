@@ -19,12 +19,13 @@ pipeline {
         }
 
         stage('Setup and build') {
+            agent { label 'docker' }
             stages {
                 stage('Build project') {
                     agent {
                         docker {
                             image 'base_images/node:22'
-                            label 'docker'
+                            reuseNode true
                         }
                     }
                     environment {
@@ -32,34 +33,30 @@ pipeline {
                     }
                     steps {
                         sh label: 'Install node modules', script: 'npm ci --omit=dev'
-                        sh label: 'Archive build', script: 'tar czf node_modules.tgz node_modules'
-                        stash name: 'node_modules', includes: 'node_modules.tgz'
-                    }
-                    post {
-                        cleanup {
-                            cleanWs()
-                        }
                     }
                 }
 
                 stage('Build artifact') {
-                    agent { label 'ubuntu && 20.04' }
+                    agent {
+                        docker {
+                            image 'base_images/ruby:2.7'
+                            reuseNode true
+                        }
+                    }
                     environment {
                         GIT_SHORT_COMMIT = util.shortCommitRef()
                         ARTIFACT_VERSION = "${env.PIPELINE_VERSION}" + '+sha.' + "${env.GIT_SHORT_COMMIT}"
                     }
                     steps {
                         sh label: 'Install rubygems', script: 'bundle install --deployment'
-                        unstash 'node_modules'
-                        sh label: 'Extract build', script: 'tar xzf node_modules.tgz && rm node_modules.tgz'
                         sh label: 'Build artifact', script: "bundle exec rake build_artifact ARTIFACT_VERSION=${env.ARTIFACT_VERSION}"
                         archiveArtifacts artifacts: "pkg/*${env.ARTIFACT_VERSION}*.deb", onlyIfSuccessful: true
                     }
-                    post {
-                        cleanup {
-                            cleanWs()
-                        }
-                    }
+                }
+            }
+            post {
+                cleanup {
+                    cleanWs()
                 }
             }
         }
